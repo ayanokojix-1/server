@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs'); // Import bcrypt
 const cors = require('cors')
 // Create Express app
 const app = express();
@@ -8,8 +9,6 @@ const PORT = 3000;
 
 // Middleware to parse JSON requests
 app.use(bodyParser.json());
-
-app.use(cors());
 
 // Connect to MongoDB (Replace with your MongoDB connection string)
 mongoose.connect('mongodb+srv://ayanokojix:ejwRyGJ5Yieow4VK@cluster0.1rruy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
@@ -26,7 +25,7 @@ const userSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true },
     fullName: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    password: { type: String, required: true }, // Store password as is (no hashing)
+    password: { type: String, required: true }, // Store hashed password
 });
 
 // Create a Mongoose model
@@ -42,12 +41,16 @@ app.post('/signup', async (req, res) => {
     }
 
     try {
-        // Save user to the database with the plain password (no hashing)
+        // Hash the password before saving
+        const saltRounds = 10; // Cost factor for hashing
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+        // Save user to the database with hashed password
         const newUser = new User({
             username,
             fullName,
             email,
-            password, // Store the password as is
+            password: hashedPassword, // Save hashed password
         });
 
         await newUser.save();
