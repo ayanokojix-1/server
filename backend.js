@@ -9,6 +9,7 @@ const PORT = 3000;
 
 // Middleware to parse JSON requests
 app.use(bodyParser.json());
+app.use(cors());
 
 // Connect to MongoDB (Replace with your MongoDB connection string)
 mongoose.connect('mongodb+srv://ayanokojix:ejwRyGJ5Yieow4VK@cluster0.1rruy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
