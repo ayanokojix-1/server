@@ -12,7 +12,7 @@
   "version": "1.0.0",
   "main": "backend.js",
   "scripts": {
-    "start":"node backend"
+    "start":"node backend",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
