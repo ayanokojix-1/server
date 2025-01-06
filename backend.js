@@ -1,7 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs'); // Import bcrypt
 
 // Create Express app
 const app = express();
@@ -25,7 +24,7 @@ const userSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true },
     fullName: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    password: { type: String, required: true }, // Store hashed password
+    password: { type: String, required: true }, // Store password as is (no hashing)
 });
 
 // Create a Mongoose model
@@ -41,16 +40,12 @@ app.post('/signup', async (req, res) => {
     }
 
     try {
-        // Hash the password before saving
-        const saltRounds = 10; // Cost factor for hashing
-        const hashedPassword = await bcrypt.hash(password, saltRounds);
-
-        // Save user to the database with hashed password
+        // Save user to the database with the plain password (no hashing)
         const newUser = new User({
             username,
             fullName,
             email,
-            password: hashedPassword, // Save hashed password
+            password, // Store the password as is
         });
 
         await newUser.save();
