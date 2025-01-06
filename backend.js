@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs'); // Import bcrypt
 const cors = require('cors');
+
 const rateLimit = require('express-rate-limit'); // Import express-rate-limit
 // Create Express app
 const app = express();
