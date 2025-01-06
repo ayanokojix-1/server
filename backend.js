@@ -8,7 +8,6 @@ const rateLimit = require('express-rate-limit'); // Import express-rate-limit
 const app = express();
 const PORT = 3000;
 
-// Middleware to parse JSON requests
 app.use(bodyParser.json());
 app.use(cors());
 
