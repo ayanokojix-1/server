@@ -21,9 +21,9 @@ const limiter = rateLimit({
 
 // Apply rate limiter to all requests (or specific routes like '/signup')
 app.use(limiter);
-
+const mongoDB_URL = process.env.MONGODB_URL || ""
 // Connect to MongoDB (Replace with your MongoDB connection string)
-mongoose.connect('mongodb+srv://ayanokojix:ejwRyGJ5Yieow4VK@cluster0.1rruy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
+mongoose.connect(mongoDB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 }).then(() => {
